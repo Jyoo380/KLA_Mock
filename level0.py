@@ -34,7 +34,7 @@ class Shortest_Path():
             else:
                 continue
         return min_node
-
+########################################################################################################################################
 f=open("Y:/Student Handout/Input data/level0.json")
 data=json.load(f)
 neighbourhood=['r0']
@@ -53,7 +53,7 @@ for i in range(g_size-1):
 
 """ for i in graph:
     print(i, end="\n") """
-
+#######################################################################################################################################
 g=Shortest_Path(g_size)
 g.graph=graph
 approached=[0]
