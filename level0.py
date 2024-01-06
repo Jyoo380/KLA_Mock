@@ -31,19 +31,18 @@ class Shortest_Path():
 #Processing of the input data
 f=open("Y:/Student Handout/Input data/level0.json")
 data=json.load(f)
-neighbourhood=[]
+neighbourhood=[-1]
 for i in data["neighbourhoods"]:
     neighbourhood.append(i)
 graph=[]
 g_size=data["n_neighbourhoods"]+data["n_restaurants"]
-g_0=[0]+data["restaurants"]["r0"]["neighbourhood_distance"]
+g_0=data["restaurants"]["r0"]["restaurant_distance"]+data["restaurants"]["r0"]["neighbourhood_distance"]
 graph.append(g_0)
-for i in range(g_size):
+for i in range(g_size-1):
     inn=[]
-    if(i!=20):
-        inn.append(data["restaurants"]["r0"]["neighbourhood_distance"][i])
-    for j in range(g_size):
-        inn.append(data["neighbourhoods"][neighbourhood[i-1]]["distances"][j-1])
+    inn.append(data["restaurants"]["r0"]["neighbourhood_distance"][i])
+    for j in data["neighbourhoods"][neighbourhood[i+1]]["distances"]:
+        inn.append(j)
     graph.append(inn)
 for i in range(g_size):
     for j in range(g_size):
