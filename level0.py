@@ -27,14 +27,13 @@ class Shortest_Path():
     def printSolution(self, dist, approached):
         min=0
         min_node=0
-        print("node\tdist")
         for node in range(self.V):
-            print(node,"\t",dist[node])
-            if dist[node]!=0 and node!=0 and (node not in approached) and (dist[node]<min or min==0):
+            if (dist[node]!=0) and (node not in approached) and (dist[node]<min or min==0):
                 min=dist[node]
                 min_node=node
+            else:
+                continue
         return min_node
-
 
 f=open("Y:/Student Handout/Input data/level0.json")
 data=json.load(f)
@@ -52,10 +51,20 @@ for i in range(g_size-1):
         inn.append(j)
     graph.append(inn)
 
+""" for i in graph:
+    print(i, end="\n") """
+
 g=Shortest_Path(g_size)
 g.graph=graph
 approached=[0]
-for i in range(len(graph)):
+for i in range(g_size):
     x=g.dijkstra(approached[i], approached)
     approached.append(x)
-print(approached)
+spt=[]
+for i in approached:
+    spt.append(neighbourhood[i])
+dictionary={"v0":{"path":spt}}
+with open("level0_output.json","w") as output:
+    json.dump(dictionary, output)
+
+#12440
