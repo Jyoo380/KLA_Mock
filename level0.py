@@ -28,6 +28,7 @@ class Shortest_Path():
         for node in range(self.V):
             print(node, "\t\t", dist[node])
 
+#Processing of the input data
 f=open("Y:/Student Handout/Input data/level0.json")
 data=json.load(f)
 neighbourhood=[]
@@ -44,6 +45,11 @@ for i in range(g_size):
     for j in range(g_size):
         inn.append(data["neighbourhoods"][neighbourhood[i-1]]["distances"][j-1])
     graph.append(inn)
+for i in range(g_size):
+    for j in range(g_size):
+        print(graph[i][j], end=' ')
+    print('\n')
+#End of processing the data
 g=Shortest_Path(g_size)
 g.graph=graph
 g.dijkstra(0)
