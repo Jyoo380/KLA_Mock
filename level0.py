@@ -12,7 +12,7 @@ class Shortest_Path():
                 min = dist[i]
                 min_in=i
         return min_in
-    def dijkstra(self, source):
+    def dijkstra(self, source, approached):
         dist=[1e7]*self.V
         dist[source]=0
         spt=[False]*self.V
@@ -22,16 +22,23 @@ class Shortest_Path():
             for j in range(self.V):
                 if(self.graph[u][j]>0 and spt[j]==False and dist[j]>dist[u]+self.graph[u][j]):
                     dist[j]=dist[u]+self.graph[u][j]
-        self.printSolution(dist)
-    def printSolution(self, dist):
-        print("Vertex\tDistance from Source")
+        x=self.printSolution(dist, approached)
+        return x
+    def printSolution(self, dist, approached):
+        min=0
+        min_node=0
+        print("node\tdist")
         for node in range(self.V):
-            print(node, "\t\t", dist[node])
+            print(node,"\t",dist[node])
+            if dist[node]!=0 and node!=0 and (node not in approached) and (dist[node]<min or min==0):
+                min=dist[node]
+                min_node=node
+        return min_node
 
-#Processing of the input data
+
 f=open("Y:/Student Handout/Input data/level0.json")
 data=json.load(f)
-neighbourhood=[-1]
+neighbourhood=['r0']
 for i in data["neighbourhoods"]:
     neighbourhood.append(i)
 graph=[]
@@ -44,11 +51,11 @@ for i in range(g_size-1):
     for j in data["neighbourhoods"][neighbourhood[i+1]]["distances"]:
         inn.append(j)
     graph.append(inn)
-for i in range(g_size):
-    for j in range(g_size):
-        print(graph[i][j], end=' ')
-    print('\n')
-#End of processing the data
+
 g=Shortest_Path(g_size)
 g.graph=graph
-g.dijkstra(0)
+approached=[0]
+for i in range(len(graph)):
+    x=g.dijkstra(approached[i], approached)
+    approached.append(x)
+print(approached)
